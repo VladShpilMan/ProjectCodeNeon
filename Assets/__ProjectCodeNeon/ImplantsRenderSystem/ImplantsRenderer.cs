@@ -1,37 +1,37 @@
 using System.Collections.Generic;
 using __ProjectCodeNeon.ImplantsRenderSystem.DataTypes;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace __ProjectCodeNeon.ImplantsRenderSystem
 {
     public class ImplantsRenderer : MonoBehaviour
     {
-        public Skeleton Skeleton;
-        public ImplantsConfig ImplantsConfig;
-        
+        [SerializeField] private ImplantsConfig _implantsConfig;
         private List<GameObject> _spawnedImplants = new List<GameObject>();
-        private const string Separator = "-";
+        private Skeleton _skeleton;
 
+        public ImplantsRenderer(List<IRenderableImplant> implantsToRender)
+        {
+            Initialize(implantsToRender);
+        }
+
+        public void Initialize(List<IRenderableImplant> implantsToRender)
+        {
+            _skeleton = new Skeleton(transform);
+            ClearImplants();
+            foreach (var implant in implantsToRender)
+                RenderImplant(implant.ParseImplant(_implantsConfig), $"Invalid implant: {implant.Placement}-{implant.Id}");
+        }
         
-        private void Awake()
+        private void ClearImplants()
         {
-            Skeleton = new Skeleton(transform);
+            foreach (var implant in _spawnedImplants)
+                Destroy(implant);
+            
+            _spawnedImplants.Clear();
+            _skeleton.EnableAllOrigins();
         }
-
-        public void SetImplant(string command)
-        {
-            var implant = ParseImplant(command);
-            RenderImplant(implant, $"Invalid implant command: {command}");
-        }
-
-        public void SetImplant(ImplantPlacement type, int id)
-        {
-            var implant = ImplantsConfig.GetImplant(type.ToString(), id);
-            RenderImplant(implant, $"Invalid implant type: {type}, id: {id}");
-        }
-
-        public string BuildCommand(ImplantPlacement type, int id)
-            => $"{type}-{id}";
 
         private void RenderImplant(Implant implant, string errorMsg)
         {
@@ -44,7 +44,7 @@ namespace __ProjectCodeNeon.ImplantsRenderSystem
             foreach (var element in implant.Elements)
             {
                 var elementType = element.GetElementType(implant.Name);
-                var spawnPoint = Skeleton.GetBone(elementType);
+                var spawnPoint = _skeleton.GetBone(elementType);
                 if (spawnPoint == null)
                 {
                     Debug.LogWarning($"Spawn point not found for element {elementType}");
@@ -53,22 +53,9 @@ namespace __ProjectCodeNeon.ImplantsRenderSystem
 
                 var newObject = Instantiate(element.Prefab, spawnPoint) as GameObject;
                 newObject.transform.SetParent(spawnPoint);
-                Skeleton.ToggleOrigin(elementType, element.DisableOrigin);
+                _skeleton.ToggleOrigin(elementType, element.DisableOrigin);
                 _spawnedImplants.Add(newObject);
             }
-        }
-
-        private Implant ParseImplant(string command)
-        {
-            var commandParts = command.Split(Separator);
-
-            if (commandParts.Length != 2 || !int.TryParse(commandParts[1], out int implantId))
-            {
-                Debug.LogError($"Invalid command format or implant ID: {command}");
-                return null;
-            }
-
-            return ImplantsConfig.GetImplant(commandParts[0], implantId);
         }
     }
 }

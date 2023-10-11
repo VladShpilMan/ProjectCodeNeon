@@ -9,6 +9,7 @@ namespace __ProjectCodeNeon.ImplantsRenderSystem
         public Implant[] HeadImplantsPrefab;
         public Implant[] BodyImplantsPrefab;
         public Implant[] HandImplantsPrefab;
+        public Implant[] LegImplantsPrefab;
 
         public Implant GetImplant(string type, int id)
         {
@@ -23,6 +24,8 @@ namespace __ProjectCodeNeon.ImplantsRenderSystem
                     return HandImplantsPrefab[id];
                 case "RightHand":
                     return HandImplantsPrefab[id];
+                case "Leg":
+                    return LegImplantsPrefab[id];
             }
 
             return null;

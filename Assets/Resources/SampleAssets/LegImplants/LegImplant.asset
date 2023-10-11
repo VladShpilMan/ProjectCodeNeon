@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c87fdd0aa951ed0418aca1e38f835702, type: 3}
+  m_Name: LegImplant
+  m_EditorClassIdentifier: 
+  Elements:
+  - Type: 5
+    Prefab: {fileID: 2653475206810635694, guid: 2d08ca0d80ba07d4a9f948a513b3a3ce, type: 3}
+    DisableOrigin: 0
+  Name: Leg

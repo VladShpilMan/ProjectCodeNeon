@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 47ec8210e0d42ba4eac58eaf0a022119, type: 3}
+  m_Name: ImplantsConfig
+  m_EditorClassIdentifier: 
+  HeadImplantsPrefab:
+  - {fileID: 11400000, guid: 011220330a0f0a0408b0ae549465cb63, type: 2}
+  BodyImplantsPrefab:
+  - {fileID: 11400000, guid: 0a8b002266257c24488c91b79803361e, type: 2}
+  - {fileID: 11400000, guid: 6978a5942543ad5409216d0fc74a232c, type: 2}
+  HandImplantsPrefab:
+  - {fileID: 11400000, guid: 892ebf6cd1831f746b9999fa9e4e2de0, type: 2}
+  - {fileID: 11400000, guid: eff0c7fc29c42a34cb71b6abf99abb1d, type: 2}
+  - {fileID: 11400000, guid: 47f25a09211438a4c967bcfc2a120f8b, type: 2}
+  LegImplantsPrefab:
+  - {fileID: 11400000, guid: 0599b9434c26ce644a8494454133379f, type: 2}

@@ -34,6 +34,15 @@ namespace __ProjectCodeNeon.ImplantsRenderSystem
             _legsOrigin = FindBone(root, "legsOrigin");
         }
 
+        public void EnableAllOrigins()
+        {
+            _leftShoulderOrigin.gameObject.SetActive(true);
+            _leftHandOrigin.gameObject.SetActive(true);
+            _rightShoulderOrigin.gameObject.SetActive(true);
+            _rightHandOrigin.gameObject.SetActive(true);
+            _legsOrigin.gameObject.SetActive(true);
+        }
+        
         public void ToggleOrigin(string type, bool state)
         {
             

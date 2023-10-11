@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c87fdd0aa951ed0418aca1e38f835702, type: 3}
+  m_Name: ArmoredHand
+  m_EditorClassIdentifier: 
+  Elements:
+  - Type: 2
+    Prefab: {fileID: 3574841905398958231, guid: 758890baede84e14f8896c74ab265767, type: 3}
+    DisableOrigin: 0
+  - Type: 0
+    Prefab: {fileID: 6685260394374626687, guid: 257a648fffc4e1943beea9d88e5f6c05, type: 3}
+    DisableOrigin: 0
+  Name: Hand

@@ -1,0 +1,16 @@
+{
+    "name": "EntitiesAssembly",
+    "rootNamespace": "",
+    "references": [
+        "GUID:63b4bc9b0ecfa2a4f92e546e45bcbe72"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

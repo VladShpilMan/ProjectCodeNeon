@@ -1,5 +1,7 @@
 using __ProjectCodeNeon.Entities;
+using Codice.CM.Client.Differences.Merge;
 using Codice.CM.Common;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,6 +13,7 @@ namespace __ProjectCodeNeon.Entities
     {
         private bool jump;
         private bool crouch;
+        private bool shoot;
 
         public StandingState(CharacterGameController character, StateMachine stateMachine) : base(character, stateMachine)
         {
@@ -41,6 +44,7 @@ namespace __ProjectCodeNeon.Entities
             }
             else if (jump)
             {
+            
                 stateMachine.ChangeState(character.jumping);
             }
         }

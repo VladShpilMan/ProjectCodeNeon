@@ -18,4 +18,5 @@ public class CharacterData : ScriptableObject
     public float diveForce = 30f;
     public float bulletInitialSpeed = 10f;
     public float diveCooldownTimer = 0.25f;
+    public float damage = 5.0f;
 }

@@ -12,6 +12,7 @@ namespace __ProjectCodeNeon.Entities
 
         private float horizontalInput;
         private float verticalInput;
+        private bool isShoot;
 
         public GroundedState(CharacterGameController character, StateMachine stateMachine) : base(character, stateMachine)
         {
@@ -32,14 +33,20 @@ namespace __ProjectCodeNeon.Entities
         public override void HandleInput()
         {
             base.HandleInput();
-            verticalInput = Input.GetAxis("Vertical");
-            horizontalInput = Input.GetAxis("Horizontal");
+            verticalInput = character.InputController.GetVerticalMovement();
+            horizontalInput = character.InputController.GetHorizontalMovement();
+            isShoot = character.InputController.IsShooting();
+            if (character.InputController.NextCard()) character.ShowNextCard();
+            if(character.InputController.PreviousCard()) character.ShowPreviousCard();
         }
 
         public override void PhysicsUpdate()
         {
             base.PhysicsUpdate();
+            //base.character.anim.SetInteger("MovementState", 2);
             character.Move(verticalInput * speed, horizontalInput * rotationSpeed);
+
+            if (isShoot) character.currentImplant.Action();
         }
     }
 }

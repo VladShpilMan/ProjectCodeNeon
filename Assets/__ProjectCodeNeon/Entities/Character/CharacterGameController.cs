@@ -3,6 +3,12 @@ using __ProjectCodeNeon.ImplantsRenderSystem.DataTypes;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
+using __ProjectCodeNeon;
+using UnityEditor;
+using System.Linq;
+using System;
+using static UnityEditor.Experimental.AssetDatabaseExperimental.AssetDatabaseCounters;
 
 namespace __ProjectCodeNeon.Entities
 {
@@ -17,13 +23,15 @@ namespace __ProjectCodeNeon.Entities
         [SerializeField]
         private CharacterData data;
         [SerializeField]
-        private Animator anim;
+        public Animator anim;
         #endregion
 
         #region Some
         private int horizonalMoveParam = Animator.StringToHash("H_Speed");
         private int verticalMoveParam = Animator.StringToHash("V_Speed");
         private float collisionOverlapRadius = 0.5f;
+        public float rotationSpeed = 10f;
+        public CursorController cursor;
         #endregion
 
         #region Properties
@@ -50,19 +58,56 @@ namespace __ProjectCodeNeon.Entities
         public JumpingState jumping;
         #endregion
 
-        public List<Implant> ImplantsList { get; set; }
+        public List<Implant> ActiveImplantsList { get; set; }
+        public List<Implant> PassiveImplantsList { get; set; }
 
-        private string _loadedImplantList = "";
+        public Implant currentImplant;
+
+        private string _loadedActiveImplantsList = "";
+        private string _loadedPassiveImplantsListt = "";
+
+        public Bullet Bullet { get; set; }
+
+        public IInputController InputController 
+        { 
+            get
+            {
+                return _inputController;
+            }
+            set
+            {
+                _inputController = value;
+            }
+        }
 
         public void Awake()
         {
+            GameManager.Instance.SetPlayer(this);
             _movementSM = new StateMachine();
             standing = new StandingState(this, _movementSM);
             ducking = new DuckingState(this, _movementSM);
             jumping = new JumpingState(this, _movementSM);
             _movementSM.Initialize(standing);
-            //ImplantsList = _implantController.GetAllImplantsBasedOnList(_loadedImplantList);
-            //_implantsRenderer = new ImplantsRenderer(ImplantsList.ImplantToIRenderableImplant());
+            cursor = FindObjectOfType<CursorController>();
+            //ActiveImplantsList = _implantController.GetAllImplantsBasedOnList(_loadedActiveImplantsList);
+            //PassiveImplantsList = _implantController.GetAllImplantsBasedOnList(_loadedPassiveImplantsListt);
+            //_implantsRenderer = new ImplantsRenderer(ActiveImplantsList.ImplantToIRenderableImplant());
+
+            ActiveImplantsList = new List<Implant>
+        {
+            new ElectromagneticImplant { Id = 1, Name = "Implant1", Description = "Description1", Damage = 10, Placement = ImplantPlacement.Head },
+            new FireRingImplant { Id = 2, Name = "Implant2", Description = "Description2", Damage = 15, Placement = ImplantPlacement.Body },
+        };
+
+            PassiveImplantsList = new List<Implant>
+        {
+            new Implant { Id = 1, Name = "Implant1", Description = "Description1", Damage = 10, Placement = ImplantPlacement.Head },
+            new Implant { Id = 2, Name = "Implant2", Description = "Description2", Damage = 15, Placement = ImplantPlacement.Body },
+            new Implant { Id = 3, Name = "Implant3", Description = "Description3", Damage = 20, Placement = ImplantPlacement.RightLeg },
+            new Implant { Id = 4, Name = "Implant4", Description = "Description4", Damage = 25, Placement = ImplantPlacement.RightHand }
+        };
+
+            currentImplant = ActiveImplantsList.First();
         }
 
         private void Update()
@@ -71,6 +116,8 @@ namespace __ProjectCodeNeon.Entities
             _movementSM.CurrentState.HandleInput();
 
             _movementSM.CurrentState.LogicUpdate();
+
+            transform.rotation = InputController.GetLook(transform, cursor.transform);
         }
 
         private void FixedUpdate()
@@ -79,6 +126,7 @@ namespace __ProjectCodeNeon.Entities
         }
 
         #region Methods
+
         public void Move(float speed, float rotationSpeed)
         {
             Vector3 targetVelocity = speed * transform.forward * Time.deltaTime;
@@ -92,15 +140,39 @@ namespace __ProjectCodeNeon.Entities
                 //SoundManager.Instance.PlayFootSteps(Mathf.Abs(speed));
             }
 
-            //anim.SetFloat(horizonalMoveParam, GetComponent<Rigidbody>().angularVelocity.y);
-            //anim.SetFloat(verticalMoveParam, speed * Time.deltaTime);
+            anim.SetFloat(horizonalMoveParam, GetComponent<Rigidbody>().angularVelocity.y);
+            anim.SetFloat(verticalMoveParam, speed * Time.deltaTime);
+        }
+
+        public void Shoot()
+        {
+            Debug.Log("shoot");
+        }
+
+        public void ShowNextCard()
+        {
+            int currentIndex = ActiveImplantsList.IndexOf(currentImplant);
+            currentImplant = ActiveImplantsList[currentIndex + 1];
+            CalculateDamage();
+        }
+
+        public void ShowPreviousCard()
+        {
+            int currentIndex = ActiveImplantsList.IndexOf(currentImplant);
+            currentImplant = ActiveImplantsList[currentIndex - 1];
+            CalculateDamage();
+        }
+
+        private void CalculateDamage()
+        {
+            data.damage = CombatController.CalculateDamage(currentImplant, PassiveImplantsList);
         }
 
         public void ResetMoveParams()
         {
             GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
-            //anim.SetFloat(horizonalMoveParam, 0f);
-            //anim.SetFloat(verticalMoveParam, 0f);
+            anim.SetFloat(horizonalMoveParam, 0f);
+            anim.SetFloat(verticalMoveParam, 0f);
         }
 
         //public bool CheckCollisionOverlap(Vector3 point)

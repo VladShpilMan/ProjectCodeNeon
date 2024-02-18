@@ -15,11 +15,11 @@ MonoBehaviour:
   shootableObject: {fileID: 0}
   staticShootable: {fileID: 0}
   meleeWeapon: {fileID: 0}
-  movementSpeed: 150
+  movementSpeed: 1000
   crouchSpeed: 50
   crouchColliderHeight: 1
   normalColliderHeight: 2
-  rotationSpeed: 60
+  rotationSpeed: 300
   crouchRotationSpeed: 30
   jumpForce: 10
   diveForce: 30

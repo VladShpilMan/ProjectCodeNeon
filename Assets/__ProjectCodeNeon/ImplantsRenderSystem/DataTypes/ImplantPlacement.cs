@@ -9,4 +9,10 @@ namespace __ProjectCodeNeon.ImplantsRenderSystem.DataTypes
         LeftLeg,
         RightLeg
     }
+
+    public enum ImplantMode
+    {
+        Melee,
+        Ranged
+    }
 }

@@ -17,7 +17,6 @@ namespace __ProjectCodeNeon.Entities
         public void ChangeState(State newState)
         {
             CurrentState.Exit();
-
             CurrentState = newState;
             newState.Enter();
         }

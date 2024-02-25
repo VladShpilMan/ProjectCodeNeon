@@ -29,6 +29,26 @@ namespace __ProjectCodeNeon.Entities
             }
         }
 
+        public int EnemiesCount;
+        public GameObject AbilityChoose;
+        public GameObject CharacterObject;
+        
+        public void AddEnemy()
+        {
+            EnemiesCount++;
+        }
+        
+        public void RemoveEnemy()
+        {
+            EnemiesCount--;
+            
+            if(EnemiesCount <= 0)
+            {
+                CharacterObject.SetActive(false);
+                AbilityChoose.SetActive(true);
+            }
+        }
+
         public void SetPlayer(CharacterGameController player)
         {
             IInputController inputController;

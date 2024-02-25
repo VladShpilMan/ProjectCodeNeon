@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace __ProjectCodeNeon.Entities
 {
-    public class Implant : IRenderableImplant
+    public class Implant : MonoBehaviour, IRenderableImplant
     {
         public int Id { get; set; }
 

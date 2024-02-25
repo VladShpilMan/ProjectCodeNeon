@@ -19,6 +19,8 @@ namespace __ProjectCodeNeon.Entities
         private ImplantController _implantController;
         private ImplantsRenderer _implantsRenderer;
 
+        public GameObject FirePoint;
+
         #region SerializeField
         [SerializeField]
         private CharacterData data;

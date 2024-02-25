@@ -4,7 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4297555b-b6fa-4e9d-8d9a-8a0513315665" name="Changes" comment="" />
+    <list default="true" id="4297555b-b6fa-4e9d-8d9a-8a0513315665" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.ProjectCodeNeon/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.ProjectCodeNeon/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/Animations/Player/PlayerBase.controller" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Animations/Player/PlayerBase.controller" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/Materials/Element.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Materials/Element.mat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/__ProjectCodeNeon/Entities/Character/CharacterGameController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/__ProjectCodeNeon/Entities/Character/CharacterGameController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/__ProjectCodeNeon/Entities/Character/States/GroundedState.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/__ProjectCodeNeon/Entities/Character/States/GroundedState.cs" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -12,6 +18,12 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/Assets/__ProjectCodeNeon/Entities/Implant/ImplantController.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/__ProjectCodeNeon/Entities/UIManagement/CardsPull.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/__ProjectCodeNeon/ImplantsRenderSystem/RemoveAfter.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/__ProjectCodeNeon/MapGeneration/LevelGenerator.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -23,9 +35,11 @@
   </component>
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
+    &quot;Attach to Unity Editor.Attach to Unity Editor.executor&quot;: &quot;Debug&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;FEAT-3&quot;
+    &quot;git-widget-placeholder&quot;: &quot;FEAT-3&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;
   },
   &quot;keyToStringList&quot;: {
     &quot;rider.external.source.directories&quot;: [
@@ -62,10 +76,10 @@
       </option>
       <method v="2" />
     </configuration>
-    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost">
+    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost" ignored-value-for-modified-check="44612">
       <option name="allowRunningInParallel" value="false" />
       <option name="listenPortForConnections" value="false" />
-      <option name="pid" />
+      <option name="pid" value="44612" />
       <option name="projectPathOnTarget" />
       <option name="selectedOptions">
         <list />

@@ -49,7 +49,7 @@ ParticleSystem:
   ringBufferLoopRange: {x: 0, y: 1}
   emitterVelocityMode: 1
   looping: 1
-  prewarm: 0
+  prewarm: 1
   playOnAwake: 1
   useUnscaledTime: 0
   autoRandomSeed: 1
@@ -4838,10 +4838,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6945539533286638942}
+  - component: {fileID: 1652665896372957721}
   - component: {fileID: 1981289303769696591}
   - component: {fileID: 5152438022424000758}
   - component: {fileID: 8739457105412395937}
-  - component: {fileID: -2488759524084981776}
+  - component: {fileID: 3707572001293957606}
   m_Layer: 0
   m_Name: OrangeProjectile
   m_TagString: Untagged
@@ -4865,6 +4866,18 @@ Transform:
   - {fileID: 4227424292445356776}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1652665896372957721
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7323727902802632679}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 40c78d52f7b192b478f124434e90259b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!33 &1981289303769696591
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -4930,13 +4943,13 @@ SphereCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
---- !u!54 &-2488759524084981776
+--- !u!54 &3707572001293957606
 Rigidbody:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -4958,8 +4971,8 @@ Rigidbody:
     m_Bits: 0
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
-  m_UseGravity: 1
+  m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 112
   m_CollisionDetection: 0

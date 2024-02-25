@@ -1,5 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.TextCore.Text;
 
@@ -13,6 +16,7 @@ namespace __ProjectCodeNeon.Entities
         private float horizontalInput;
         private float verticalInput;
         private bool isShoot;
+        private bool isCooldown = false;
 
         public GroundedState(CharacterGameController character, StateMachine stateMachine) : base(character, stateMachine)
         {
@@ -46,7 +50,21 @@ namespace __ProjectCodeNeon.Entities
             //base.character.anim.SetInteger("MovementState", 2);
             character.Move(verticalInput * speed, horizontalInput * rotationSpeed);
 
-            if (isShoot) character.currentImplant.Action();
+            if (isShoot)
+            {
+                if(isCooldown) return;
+                
+                CharacterGameController.Instance.Shoot();
+                character.currentImplant().Action();
+                isCooldown = true;
+                character.StartCoroutine(Cooldown());
+            }
+        }
+        
+        private IEnumerator Cooldown()
+        {
+            yield return new WaitForSeconds(0.2f);
+            isCooldown = false;
         }
     }
 }

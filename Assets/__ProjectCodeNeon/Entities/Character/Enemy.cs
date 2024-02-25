@@ -1,8 +1,10 @@
 using __ProjectCodeNeon.Entities;
+using Codice.CM.Common;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.TextCore.Text;
 
 public class Enemy : MonoBehaviour
 {
@@ -25,7 +27,8 @@ public class Enemy : MonoBehaviour
     //{
     //    base.TakeDamage(damage);
     //}
-
+    public int maxHealth = 10;
+    private int currentHealth;
     private NavMeshAgent navMeshAgent;
     private Transform player;
     private bool isChasing = false;
@@ -40,34 +43,28 @@ public class Enemy : MonoBehaviour
 
     void Start()
     {
+        currentHealth = maxHealth;
         navMeshAgent = GetComponent<NavMeshAgent>();
         player = FindObjectOfType<CharacterGameController>().transform;
-        //bulletPrefab = Resources.Load<GameObject>(prefabPath);
-        // Запуск корутины для хаотичного движения
         StartCoroutine(MoveRandomly());
     }
 
     void Update()
     {
-        // Проверка дистанции до игрока
         float distanceToPlayer = Vector3.Distance(transform.position, player.position);
 
-        // Если игрок в пределах видимости, начинаем преследование
         if (distanceToPlayer < chaseDistance)
         {
-            isChasing = true;
-            StopCoroutine(MoveRandomly());
+            //isChasing = true;
+            //StopCoroutine(MoveRandomly());
 
-            // Направляем врага к игроку
-            navMeshAgent.SetDestination(player.position);
+            //navMeshAgent.SetDestination(player.position);
 
-            // Поворачиваем в сторону игрока
-            Vector3 direction = (player.position - transform.position).normalized;
-            Quaternion lookRotation = Quaternion.LookRotation(new Vector3(direction.x, 0, direction.z));
-            transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * rotationSpeed);
+            //Vector3 direction = (player.position - transform.position).normalized;
+            //Quaternion lookRotation = Quaternion.LookRotation(new Vector3(direction.x, 0, direction.z));
+            //transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * rotationSpeed);
 
-            // Вызываем метод стрельбы
-            Shoot();
+            //Shoot();
         }
         else if (isChasing)
         {
@@ -82,31 +79,56 @@ public class Enemy : MonoBehaviour
         {
             if (!isChasing)
             {
-                Vector3 randomDirection = Random.insideUnitSphere * 10f;
-                randomDirection += transform.position;
-                NavMeshHit hit;
-                NavMesh.SamplePosition(randomDirection, out hit, 10f, NavMesh.AllAreas);
+                //Vector3 randomDirection = Random.insideUnitSphere * 10f;
+                //randomDirection += transform.position;
+                //NavMeshHit hit;
+                //NavMesh.SamplePosition(randomDirection, out hit, 10f, NavMesh.AllAreas);
 
-                navMeshAgent.SetDestination(hit.position);
+                //navMeshAgent.SetDestination(hit.position);
 
-                float moveTime = Random.Range(minMoveTime, maxMoveTime);
-                yield return new WaitForSeconds(moveTime);
+                //float moveTime = Random.Range(minMoveTime, maxMoveTime);
+                //yield return new WaitForSeconds(moveTime);
             }
 
             yield return null;
         }
     }
+    private bool isCooldown = false;
 
     void Shoot()
     {
-            Debug.Log("outside");
-        // Пример простой стрельбы с использованием пули
+        if (isCooldown) return;
+
         if (firePoint != null && bulletPrefab != null)
         {
-            Debug.Log("inside");
             GameObject bullet = Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
             Rigidbody bulletRb = bullet.GetComponent<Rigidbody>();
             bulletRb.AddForce(firePoint.forward * 10, ForceMode.Impulse);
+            isCooldown = true;
+            this.StartCoroutine(Cooldown());
         }
+    }
+
+
+    private IEnumerator Cooldown()
+    {
+        yield return new WaitForSeconds(0.4f);
+        isCooldown = false;
+    }
+
+    public void TakeDamage(int damage)
+    {
+        currentHealth -= damage;
+        Debug.Log(currentHealth);
+        if (currentHealth <= 0)
+        {
+            Die();
+        }
+    }
+
+    void Die()
+    {
+        Debug.Log("die");
+        Destroy(gameObject);
     }
 }

@@ -7,7 +7,7 @@ public class Turret : MonoBehaviour
 {
     public float rotationSpeed = 5f;
     public float detectionRange = 10f;
-    public CharacterGameController player;
+    private CharacterGameController player;
     public GameObject bulletPrefab;
     public Transform firePoint;
     public float fireRate = 2f;

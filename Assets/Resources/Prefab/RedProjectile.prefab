@@ -4847,10 +4847,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2696751322010776600}
+  - component: {fileID: 1435696893870350857}
   - component: {fileID: 2980775357707998457}
   - component: {fileID: 8647035712516516323}
   - component: {fileID: 1211927601471049836}
-  - component: {fileID: -5363605037576233564}
+  - component: {fileID: 5283726967264256354}
   m_Layer: 0
   m_Name: RedProjectile
   m_TagString: Untagged
@@ -4875,6 +4876,18 @@ Transform:
   - {fileID: 325542668349248866}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1435696893870350857
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3861830515402247769}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 40c78d52f7b192b478f124434e90259b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!33 &2980775357707998457
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -4946,7 +4959,7 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
---- !u!54 &-5363605037576233564
+--- !u!54 &5283726967264256354
 Rigidbody:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -5022,7 +5035,7 @@ ParticleSystem:
   ringBufferLoopRange: {x: 0, y: 1}
   emitterVelocityMode: 1
   looping: 1
-  prewarm: 0
+  prewarm: 1
   playOnAwake: 1
   useUnscaledTime: 0
   autoRandomSeed: 1

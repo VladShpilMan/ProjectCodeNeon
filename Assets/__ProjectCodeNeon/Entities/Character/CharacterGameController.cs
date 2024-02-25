@@ -15,9 +15,13 @@ namespace __ProjectCodeNeon.Entities
 
     public class CharacterGameController : MonoBehaviour
     {
+        public static CharacterGameController Instance;
+        
         private IInputController _inputController;
         private ImplantController _implantController;
         private ImplantsRenderer _implantsRenderer;
+
+        private int _currentImplantIndex; 
 
         public GameObject FirePoint;
 
@@ -26,6 +30,8 @@ namespace __ProjectCodeNeon.Entities
         private CharacterData data;
         [SerializeField]
         public Animator anim;
+        [SerializeField]
+        private CardsPull _cardsPull;
         #endregion
 
         #region Some
@@ -60,10 +66,13 @@ namespace __ProjectCodeNeon.Entities
         public JumpingState jumping;
         #endregion
 
-        public List<Implant> ActiveImplantsList { get; set; }
+        public List<(Implant, int)> ActiveImplantsList { get; set; }
         public List<Implant> PassiveImplantsList { get; set; }
 
-        public Implant currentImplant;
+        public Implant currentImplant()
+        {
+            return ActiveImplantsList[_currentImplantIndex].Item1;
+        }
 
         private string _loadedActiveImplantsList = "";
         private string _loadedPassiveImplantsListt = "";
@@ -84,6 +93,7 @@ namespace __ProjectCodeNeon.Entities
 
         public void Awake()
         {
+            Instance = this;
             GameManager.Instance.SetPlayer(this);
             _movementSM = new StateMachine();
             standing = new StandingState(this, _movementSM);
@@ -95,10 +105,11 @@ namespace __ProjectCodeNeon.Entities
             //PassiveImplantsList = _implantController.GetAllImplantsBasedOnList(_loadedPassiveImplantsListt);
             //_implantsRenderer = new ImplantsRenderer(ActiveImplantsList.ImplantToIRenderableImplant());
 
-            ActiveImplantsList = new List<Implant>
+            ActiveImplantsList = new List<(Implant, int)>
         {
-            new ElectromagneticImplant { Id = 1, Name = "Implant1", Description = "Description1", Damage = 10, Placement = ImplantPlacement.Head },
-            new FireRingImplant { Id = 2, Name = "Implant2", Description = "Description2", Damage = 15, Placement = ImplantPlacement.Body },
+            (new PlasmaPistolImplant { Id = 0, Name = "Implant1", Description = "Description1", Damage = 5, Placement = ImplantPlacement.Head }, -1),
+            (new ElectromagneticImplant { Id = 1, Name = "Implant2", Description = "Description2", Damage = 10, Placement = ImplantPlacement.Head }, 15),
+            (new FireRingImplant { Id = 2, Name = "Implant3", Description = "Description3", Damage = 15, Placement = ImplantPlacement.Body }, 5),
         };
 
             PassiveImplantsList = new List<Implant>
@@ -109,7 +120,8 @@ namespace __ProjectCodeNeon.Entities
             new Implant { Id = 4, Name = "Implant4", Description = "Description4", Damage = 25, Placement = ImplantPlacement.RightHand }
         };
 
-            currentImplant = ActiveImplantsList.First();
+            _currentImplantIndex = 0;
+            _cardsPull.InitializePull(ActiveImplantsList, _currentImplantIndex);
         }
 
         private void Update()
@@ -120,6 +132,7 @@ namespace __ProjectCodeNeon.Entities
             _movementSM.CurrentState.LogicUpdate();
 
             transform.rotation = InputController.GetLook(transform, cursor.transform);
+            
         }
 
         private void FixedUpdate()
@@ -148,26 +161,45 @@ namespace __ProjectCodeNeon.Entities
 
         public void Shoot()
         {
-            Debug.Log("shoot");
+            if (ActiveImplantsList[_currentImplantIndex].Item2 == -1) return;
+            
+            var amount = ActiveImplantsList[_currentImplantIndex].Item2 - 1;
+            ActiveImplantsList[_currentImplantIndex] = (ActiveImplantsList[_currentImplantIndex].Item1,amount);
+
+            if (amount <= 0)
+            {
+                ActiveImplantsList.RemoveAt(_currentImplantIndex);
+                if (_currentImplantIndex >= ActiveImplantsList.Count)
+                    _currentImplantIndex = ActiveImplantsList.Count - 1;
+            }
+            
+            _cardsPull.InitializePull(ActiveImplantsList, _currentImplantIndex);
         }
 
         public void ShowNextCard()
         {
-            int currentIndex = ActiveImplantsList.IndexOf(currentImplant);
-            currentImplant = ActiveImplantsList[currentIndex + 1];
+            if (_currentImplantIndex + 1 >= ActiveImplantsList.Count)
+                _currentImplantIndex = 0;
+            else 
+                _currentImplantIndex++;
             CalculateDamage();
+            _cardsPull.InitializePull(ActiveImplantsList, _currentImplantIndex);
         }
 
         public void ShowPreviousCard()
         {
-            int currentIndex = ActiveImplantsList.IndexOf(currentImplant);
-            currentImplant = ActiveImplantsList[currentIndex - 1];
+            if (_currentImplantIndex - 1 < 0)
+                _currentImplantIndex = ActiveImplantsList.Count - 1;
+            else
+                _currentImplantIndex--;
+            
             CalculateDamage();
+            _cardsPull.InitializePull(ActiveImplantsList, _currentImplantIndex);
         }
 
         private void CalculateDamage()
         {
-            data.damage = CombatController.CalculateDamage(currentImplant, PassiveImplantsList);
+            data.damage = CombatController.CalculateDamage(currentImplant(), PassiveImplantsList);
         }
 
         public void ResetMoveParams()

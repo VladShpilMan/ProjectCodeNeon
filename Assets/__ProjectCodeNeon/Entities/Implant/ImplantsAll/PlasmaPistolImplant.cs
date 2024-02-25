@@ -32,6 +32,7 @@ namespace __ProjectCodeNeon.Entities
 
         public override void Action()
         {
+            Debug.Log("shoot");
             ShootBullet(FirePoint.transform.forward);
         }
 

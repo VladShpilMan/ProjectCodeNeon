@@ -132,7 +132,6 @@ namespace __ProjectCodeNeon.Entities
             _movementSM.CurrentState.LogicUpdate();
 
             transform.rotation = InputController.GetLook(transform, cursor.transform);
-            
         }
 
         private void FixedUpdate()

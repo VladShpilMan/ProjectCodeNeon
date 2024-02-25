@@ -131,7 +131,7 @@ namespace __ProjectCodeNeon.Entities
 
         public void Move(float speed, float rotationSpeed)
         {
-            Vector3 targetVelocity = speed * transform.forward * Time.deltaTime;
+            Vector3 targetVelocity = speed * transform.TransformDirection(Vector3.forward) * Time.deltaTime;
             targetVelocity.y = GetComponent<Rigidbody>().velocity.y;
             GetComponent<Rigidbody>().velocity = targetVelocity;
 

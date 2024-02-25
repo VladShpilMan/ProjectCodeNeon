@@ -17,7 +17,7 @@ namespace __ProjectCodeNeon.Entities {
 
         public ElectromagneticImplant()
         {
-            FirePoint = GameObject.Find("FirePoint");
+            FirePoint = GameObject.Find("PlayerFirePoint");
             bulletPrefab = Resources.Load<GameObject>(prefabPath);
 
             if (bulletPrefab == null)

@@ -1,20 +1,18 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace __ProjectCodeNeon.Entities
 {
-    public class FireRingImplant : Implant
+    public class PlasmaPistolImplant : Implant
     {
         public GameObject bulletPrefab;
         public GameObject FirePoint;
-        public float bulletForce = 40f;
-        string prefabPath = "Prefab/OrangeProjectile";
+        public float bulletForce = 60f;
+        string prefabPath = "Prefab/GreenProjectile";
 
         private Vector3 Position = new Vector3(0f, 1.96f, 1.03f);
         private Quaternion Rotation = Quaternion.identity;
 
-        public FireRingImplant()
+        public PlasmaPistolImplant()
         {
             FirePoint = GameObject.Find("FirePoint");
             bulletPrefab = Resources.Load<GameObject>(prefabPath);
@@ -32,12 +30,7 @@ namespace __ProjectCodeNeon.Entities
 
         public override void Action()
         {
-            for (int i = 0; i < 8; i++)
-            {
-                float angle = i * 45f;
-                Vector3 direction = Quaternion.Euler(0, angle, 0) * FirePoint.transform.forward;
-                ShootBullet(direction);
-            }
+            ShootBullet(FirePoint.transform.forward);
         }
 
         private void ShootBullet(Vector3 direction)
@@ -45,8 +38,6 @@ namespace __ProjectCodeNeon.Entities
             GameObject bullet = Instantiate(bulletPrefab, FirePoint.transform.position, FirePoint.transform.rotation);
             Rigidbody bulletRb = bullet.GetComponent<Rigidbody>();
             bulletRb.AddForce(direction * bulletForce, ForceMode.Impulse);
-
-            bullet.transform.rotation = Quaternion.LookRotation(direction);
         }
     }
 }

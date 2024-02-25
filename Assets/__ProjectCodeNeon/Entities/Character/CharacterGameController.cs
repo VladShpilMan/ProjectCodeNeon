@@ -15,6 +15,8 @@ namespace __ProjectCodeNeon.Entities
 
     public class CharacterGameController : MonoBehaviour
     {
+        public static CharacterGameController Instance;
+        
         private IInputController _inputController;
         private ImplantController _implantController;
         private ImplantsRenderer _implantsRenderer;
@@ -91,6 +93,7 @@ namespace __ProjectCodeNeon.Entities
 
         public void Awake()
         {
+            Instance = this;
             GameManager.Instance.SetPlayer(this);
             _movementSM = new StateMachine();
             standing = new StandingState(this, _movementSM);
@@ -129,6 +132,7 @@ namespace __ProjectCodeNeon.Entities
             _movementSM.CurrentState.LogicUpdate();
 
             transform.rotation = InputController.GetLook(transform, cursor.transform);
+            
         }
 
         private void FixedUpdate()
@@ -157,7 +161,19 @@ namespace __ProjectCodeNeon.Entities
 
         public void Shoot()
         {
-            Debug.Log("shoot");
+            if (ActiveImplantsList[_currentImplantIndex].Item2 == -1) return;
+            
+            var amount = ActiveImplantsList[_currentImplantIndex].Item2 - 1;
+            ActiveImplantsList[_currentImplantIndex] = (ActiveImplantsList[_currentImplantIndex].Item1,amount);
+
+            if (amount <= 0)
+            {
+                ActiveImplantsList.RemoveAt(_currentImplantIndex);
+                if (_currentImplantIndex >= ActiveImplantsList.Count)
+                    _currentImplantIndex = ActiveImplantsList.Count - 1;
+            }
+            
+            _cardsPull.InitializePull(ActiveImplantsList, _currentImplantIndex);
         }
 
         public void ShowNextCard()

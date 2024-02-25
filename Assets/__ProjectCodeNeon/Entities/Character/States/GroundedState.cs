@@ -54,6 +54,7 @@ namespace __ProjectCodeNeon.Entities
             {
                 if(isCooldown) return;
                 
+                CharacterGameController.Instance.Shoot();
                 character.currentImplant().Action();
                 isCooldown = true;
                 character.StartCoroutine(Cooldown());

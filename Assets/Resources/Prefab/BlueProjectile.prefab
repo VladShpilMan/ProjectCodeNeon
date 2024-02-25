@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: 5695884043405525491}
   m_Layer: 0
   m_Name: BlueProjectile
-  m_TagString: Untagged
+  m_TagString: PlayerBullet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -161,8 +161,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d02e6bdfffa63ce4faa2b897ac50a439, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 10
-  lifetime: 3
+  damage: 10
 --- !u!1 &4777347847684720109
 GameObject:
   m_ObjectHideFlags: 0

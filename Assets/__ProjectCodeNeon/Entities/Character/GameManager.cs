@@ -32,16 +32,19 @@ namespace __ProjectCodeNeon.Entities
         public int EnemiesCount;
         public GameObject AbilityChoose;
         public GameObject CharacterObject;
-        
+        public GameObject[] enemyPrefabs;
+        public int minEnemies = 6;
+        public int maxEnemies = 10;
         public void AddEnemy()
         {
             EnemiesCount++;
+            Debug.Log(EnemiesCount);
         }
         
         public void RemoveEnemy()
         {
             EnemiesCount--;
-            
+            Debug.Log(EnemiesCount);
             if(EnemiesCount <= 0)
             {
                 CharacterObject.SetActive(false);
@@ -73,5 +76,25 @@ namespace __ProjectCodeNeon.Entities
 
             //SceneManager.LoadScene("GraphicsTest");
         }
+
+        void Start()
+        {
+            SpawnEnemies();
+        }
+
+        void SpawnEnemies()
+        {
+            int numberOfEnemies = Random.Range(minEnemies, maxEnemies + 1);
+
+            for (int i = 0; i < numberOfEnemies; i++)
+            {
+                GameObject enemyPrefab = enemyPrefabs[Random.Range(0, enemyPrefabs.Length)];
+
+                Vector3 spawnPosition = new Vector3(Random.Range(-10f, 10f), 0f, Random.Range(-10f, 10f));
+
+                Instantiate(enemyPrefab, spawnPosition, Quaternion.identity);
+            }
+        }
+
     }
 }

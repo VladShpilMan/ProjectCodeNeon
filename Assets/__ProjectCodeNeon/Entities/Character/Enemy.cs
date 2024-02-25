@@ -47,6 +47,7 @@ public class Enemy : MonoBehaviour
         navMeshAgent = GetComponent<NavMeshAgent>();
         player = FindObjectOfType<CharacterGameController>().transform;
         StartCoroutine(MoveRandomly());
+        GameManager.Instance.AddEnemy();
     }
 
     void Update()
@@ -55,16 +56,16 @@ public class Enemy : MonoBehaviour
 
         if (distanceToPlayer < chaseDistance)
         {
-            //isChasing = true;
-            //StopCoroutine(MoveRandomly());
+            isChasing = true;
+            StopCoroutine(MoveRandomly());
 
-            //navMeshAgent.SetDestination(player.position);
+            navMeshAgent.SetDestination(player.position);
 
-            //Vector3 direction = (player.position - transform.position).normalized;
-            //Quaternion lookRotation = Quaternion.LookRotation(new Vector3(direction.x, 0, direction.z));
-            //transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * rotationSpeed);
-
-            //Shoot();
+            Vector3 direction = (player.position - transform.position).normalized;
+            Quaternion lookRotation = Quaternion.LookRotation(new Vector3(direction.x, 0, direction.z));
+            transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * rotationSpeed);
+            Debug.Log("Update");
+            Shoot();
         }
         else if (isChasing)
         {
@@ -79,15 +80,15 @@ public class Enemy : MonoBehaviour
         {
             if (!isChasing)
             {
-                //Vector3 randomDirection = Random.insideUnitSphere * 10f;
-                //randomDirection += transform.position;
-                //NavMeshHit hit;
-                //NavMesh.SamplePosition(randomDirection, out hit, 10f, NavMesh.AllAreas);
+                Vector3 randomDirection = Random.insideUnitSphere * 10f;
+                randomDirection += transform.position;
+                NavMeshHit hit;
+                NavMesh.SamplePosition(randomDirection, out hit, 10f, NavMesh.AllAreas);
 
-                //navMeshAgent.SetDestination(hit.position);
+                navMeshAgent.SetDestination(hit.position);
 
-                //float moveTime = Random.Range(minMoveTime, maxMoveTime);
-                //yield return new WaitForSeconds(moveTime);
+                float moveTime = Random.Range(minMoveTime, maxMoveTime);
+                yield return new WaitForSeconds(moveTime);
             }
 
             yield return null;
@@ -97,6 +98,7 @@ public class Enemy : MonoBehaviour
 
     void Shoot()
     {
+        Debug.Log("Shoot");
         if (isCooldown) return;
 
         if (firePoint != null && bulletPrefab != null)
@@ -129,6 +131,7 @@ public class Enemy : MonoBehaviour
     void Die()
     {
         Debug.Log("die");
+        GameManager.Instance.RemoveEnemy();
         Destroy(gameObject);
     }
 }

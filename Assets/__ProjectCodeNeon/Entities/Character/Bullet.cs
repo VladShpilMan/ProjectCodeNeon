@@ -7,8 +7,6 @@ public class Bullet : MonoBehaviour
     public int damage = 10;
     void OnTriggerEnter(Collider other)
     {
-
-
         Enemy enemyHealth = other.GetComponent<Enemy>();
 
         if (enemyHealth != null)
@@ -16,7 +14,7 @@ public class Bullet : MonoBehaviour
             enemyHealth.TakeDamage(damage);
         }
 
-        if (!other.CompareTag("Player"))
+        if (!other.CompareTag("Player") && !other.CompareTag("PlayerBullet"))
         {
             Destroy(gameObject);
         }

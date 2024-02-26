@@ -14,6 +14,13 @@ public class Bullet : MonoBehaviour
             enemyHealth.TakeDamage(damage);
         }
 
+        Turret turret = other.GetComponent<Turret>();
+
+        if (turret != null)
+        {
+            turret.TakeDamage(damage);
+        }
+
         if (!other.CompareTag("Player") && !other.CompareTag("PlayerBullet"))
         {
             Destroy(gameObject);

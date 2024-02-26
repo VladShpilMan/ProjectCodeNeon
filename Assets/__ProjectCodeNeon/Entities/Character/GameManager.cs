@@ -90,7 +90,7 @@ namespace __ProjectCodeNeon.Entities
             {
                 GameObject enemyPrefab = enemyPrefabs[Random.Range(0, enemyPrefabs.Length)];
 
-                Vector3 spawnPosition = new Vector3(Random.Range(-10f, 10f), 0f, Random.Range(-10f, 10f));
+                Vector3 spawnPosition = new Vector3(Random.Range(-50f, 30f), 0f, Random.Range(-50f, 30f));
 
                 Instantiate(enemyPrefab, spawnPosition, Quaternion.identity);
             }

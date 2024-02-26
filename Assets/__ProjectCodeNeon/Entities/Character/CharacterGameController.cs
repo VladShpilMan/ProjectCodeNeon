@@ -17,7 +17,7 @@ namespace __ProjectCodeNeon.Entities
     {
         public static CharacterGameController Instance;
 
-        public int maxHealth = 10;
+        public int maxHealth;
         private int currentHealth;
         private IInputController _inputController;
         private ImplantController _implantController;
@@ -97,6 +97,7 @@ namespace __ProjectCodeNeon.Entities
 
         public void Awake()
         {
+            currentHealth = maxHealth;
             Instance = this;
             GameManager.Instance.SetPlayer(this);
             _movementSM = new StateMachine();

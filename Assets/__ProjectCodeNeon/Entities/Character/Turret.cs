@@ -13,9 +13,12 @@ public class Turret : MonoBehaviour
     public float fireRate = 2f;
     private float fireCooldown = 0f;
     public float bulletForce = 10f;
+    public int maxHealth;
+    private int currentHealth;
 
     private void Start()
     {
+        currentHealth = maxHealth;
         player = FindObjectOfType<CharacterGameController>();
     }
 
@@ -66,4 +69,22 @@ public class Turret : MonoBehaviour
 
         fireCooldown = Time.time + 1f / fireRate;
     }
+
+    public void TakeDamage(int damage)
+    {
+        currentHealth -= damage;
+        Debug.Log(currentHealth);
+        if (currentHealth <= 0)
+        {
+            Die();
+        }
+    }
+
+    void Die()
+    {
+        Debug.Log("die");
+        GameManager.Instance.RemoveEnemy();
+        Destroy(gameObject);
+    }
+
 }

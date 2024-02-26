@@ -9,7 +9,7 @@ public class EnemyBullet : MonoBehaviour
     void OnTriggerEnter(Collider other)
     {
         CharacterGameController player = other.GetComponent<CharacterGameController>();
-
+        Debug.Log("fewfwefew");
         if (player != null)
         {
             player.TakeDamage(damage);

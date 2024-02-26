@@ -16,7 +16,9 @@ namespace __ProjectCodeNeon.Entities
     public class CharacterGameController : MonoBehaviour
     {
         public static CharacterGameController Instance;
-        
+
+        public int maxHealth = 10;
+        private int currentHealth;
         private IInputController _inputController;
         private ImplantController _implantController;
         [SerializeField]
@@ -251,6 +253,23 @@ namespace __ProjectCodeNeon.Entities
         public void ApplyImpulse(Vector3 force)
         {
             GetComponent<Rigidbody>().AddForce(force, ForceMode.Impulse);
+        }
+
+        public void TakeDamage(int damage)
+        {
+            currentHealth -= damage;
+            Debug.Log(currentHealth);
+            if (currentHealth <= 0)
+            {
+                Die();
+            }
+        }
+
+        void Die()
+        {
+            Debug.Log("die");
+            GameManager.Instance.RemoveEnemy();
+            Destroy(gameObject);
         }
         #endregion
     }

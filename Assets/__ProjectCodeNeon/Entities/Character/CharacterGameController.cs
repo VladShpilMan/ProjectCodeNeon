@@ -19,9 +19,11 @@ namespace __ProjectCodeNeon.Entities
         
         private IInputController _inputController;
         private ImplantController _implantController;
+        [SerializeField]
         private ImplantsRenderer _implantsRenderer;
 
         private int _currentImplantIndex; 
+        public List<GameObject> implant0, implant1, implant2;
 
         public GameObject FirePoint;
 
@@ -107,9 +109,9 @@ namespace __ProjectCodeNeon.Entities
 
             ActiveImplantsList = new List<(Implant, int)>
         {
-            (new PlasmaPistolImplant { Id = 0, Name = "Implant1", Description = "Description1", Damage = 5, Placement = ImplantPlacement.Head }, -1),
-            (new ElectromagneticImplant { Id = 1, Name = "Implant2", Description = "Description2", Damage = 10, Placement = ImplantPlacement.Head }, 15),
-            (new FireRingImplant { Id = 2, Name = "Implant3", Description = "Description3", Damage = 15, Placement = ImplantPlacement.Body }, 5),
+            (new PlasmaPistolImplant { Id = 0, Name = "Implant1", Description = "Description1", Damage = 5, Placement = ImplantPlacement.RightHand }, -1),
+            (new ElectromagneticImplant { Id = 1, Name = "Implant2", Description = "Description2", Damage = 10, Placement = ImplantPlacement.LeftHand }, 15),
+            (new FireRingImplant { Id = 2, Name = "Implant3", Description = "Description3", Damage = 15, Placement = ImplantPlacement.RightHand }, 5),
         };
 
             PassiveImplantsList = new List<Implant>
@@ -122,6 +124,35 @@ namespace __ProjectCodeNeon.Entities
 
             _currentImplantIndex = 0;
             _cardsPull.InitializePull(ActiveImplantsList, _currentImplantIndex);
+            
+            DrawImplants();
+        }
+
+        private void DrawImplants()
+        {
+            for(int i = 0; i < implant0.Count; i ++)
+                implant0[i].SetActive(false);
+            
+            for(int i = 0; i < implant1.Count; i ++)
+                implant1[i].SetActive(false);
+            
+            for(int i = 0; i < implant2.Count; i ++)
+                implant2[i].SetActive(false);
+
+            for (int i = 0; i < ActiveImplantsList.Count; i++)
+            {
+                if(ActiveImplantsList[i].Item1.Id == 0)
+                    for(int a = 0; a < implant0.Count; a ++)
+                        implant0[a].SetActive(true);
+                
+                if(ActiveImplantsList[i].Item1.Id == 1)
+                    for(int a = 0; a < implant1.Count; a ++)
+                        implant1[a].SetActive(true);
+                
+                if(ActiveImplantsList[i].Item1.Id == 2)
+                    for(int a = 0; a < implant2.Count; a ++)
+                        implant2[a].SetActive(true);
+            }
         }
 
         private void Update()
@@ -173,6 +204,7 @@ namespace __ProjectCodeNeon.Entities
             }
             
             _cardsPull.InitializePull(ActiveImplantsList, _currentImplantIndex);
+            DrawImplants();
         }
 
         public void ShowNextCard()
@@ -183,6 +215,7 @@ namespace __ProjectCodeNeon.Entities
                 _currentImplantIndex++;
             CalculateDamage();
             _cardsPull.InitializePull(ActiveImplantsList, _currentImplantIndex);
+            DrawImplants();
         }
 
         public void ShowPreviousCard()
@@ -194,6 +227,7 @@ namespace __ProjectCodeNeon.Entities
             
             CalculateDamage();
             _cardsPull.InitializePull(ActiveImplantsList, _currentImplantIndex);
+            DrawImplants();
         }
 
         private void CalculateDamage()
